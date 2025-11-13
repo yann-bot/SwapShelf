@@ -23,21 +23,16 @@ export class BookService {
     try {
       return await this.db.create(book);
     } catch (error) {
-     
       if(error instanceof Error){
-        throw error
+        throw error;
       }
-
       throw new CreateResourceError("An infra error occured while creating a book");
-     
-
     }
   }
 
 
   async readAllByTitle(title: string): Promise<Book[]> {
     const query = title?.trim() ?? "";
-
     if (!query) {
       const books = this.db.readAll();
       return books;
@@ -48,7 +43,6 @@ export class BookService {
   }
 
   async delete(id: string): Promise<boolean> {
-     
       return await this.db.delete(id);
   }
 

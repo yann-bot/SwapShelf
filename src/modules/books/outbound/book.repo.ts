@@ -1,21 +1,21 @@
 import { db } from "@/db/db";
 import { books } from "@/db/schemas";
-import type { Book, BookRepo } from "../core/books.models";
 import { eq, like } from "drizzle-orm";
+import type { Book, BookRepo } from "../core/books.models";
 
 
 
 export class BookDrizzleRepo implements BookRepo {
       async create(input: Book):Promise<Book> {
-            const [createdBook] = await db.insert(books).values(input).returning()
+            const [createdBook] = await db.insert(books).values(input).returning();
             if(!createdBook){
               throw new Error(" Repo fail to create user")
-            }
-            return createdBook
+            };
+            return createdBook;
       }
 
       async readAllByTitle(title: string):Promise<Book[]>{
-          const foundBooks = await db.select().from(books).where(like(books.title,  `%${title.trim()}%` ))
+          const foundBooks = await db.select().from(books).where(like(books.title,  `%${title.trim()}%` ));
           return foundBooks;
       }
 
@@ -25,11 +25,11 @@ export class BookDrizzleRepo implements BookRepo {
       }
 
     async readOneId(id: string):Promise<Book>{
-        const [foundBook] = await db.select().from(books).where(eq(books.id, id))
+        const [foundBook] = await db.select().from(books).where(eq(books.id, id));
         if(!foundBook){
-            throw new Error("books not found")
-        }
-        return foundBook
+            throw new Error("books not found");
+        };
+        return foundBook;
     }
 
     async delete(id: string):Promise<boolean> {
