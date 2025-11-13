@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import {
   CreateResourceError,
+  InvalidCredentialsError,
   ResourceExistsError,
   ResourceNotFoundError,
 } from "./error";
@@ -28,6 +29,9 @@ export function errorHandler(
     message = error.message;
   } else if (error instanceof ResourceNotFoundError) {
     status = 404;
+    message = error.message;
+  } else if (error instanceof InvalidCredentialsError) {
+    status = 401;
     message = error.message;
   } else if (error instanceof CreateResourceError) {
     status = 500;

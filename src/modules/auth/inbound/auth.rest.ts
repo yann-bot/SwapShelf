@@ -27,7 +27,7 @@ export function AuthController(service: AuthService): Router {
         const { email, password } = parsed.data;
         const token = await service.login(email, password);
 
-        return res.status(200).json({ message: "Authenticated", token });
+        return res.status(200).json({ message: "Authentificated", token });
       } catch (error) {
         next(error);
       }
