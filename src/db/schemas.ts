@@ -24,3 +24,12 @@ export const books = Table("books", {
 
 
 
+export const exchanges = Table("exchanges", {
+     id: text("exchange_id").primaryKey(),
+     requester_id: text().references(() => users.id).notNull(),
+     my_book_id: text().references(() => books.id ).notNull(),
+     target_book_id: text().references(() => books.id).notNull(),
+     status: text('exchange_status').notNull(),
+     created_at: integer("exchange_created_at", {mode: "timestamp"}).notNull(),
+})
+

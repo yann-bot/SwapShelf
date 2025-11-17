@@ -9,7 +9,7 @@ export type Exchange = {
     requester_id: string;
     my_book_id: string;
     target_book_id: string;
-    status: ExchangeStatus;
+    status: string;
     created_at: Date;
 };
 
@@ -27,7 +27,7 @@ export class ExchangeEntity {
 
     async request(bookDb: BookRepo, exchangeDb: ExchangeRepo) {
         const myBook: Book | undefined = await bookDb.readOneId(this.myBookId);
-        const targetBook: Book | undefined = await bookDb.readOneId(this.targetBookId)
+        const targetBook: Book | undefined = await bookDb.readOneId(this.targetBookId);
 
         if (!myBook) throw new ResourceNotFoundError("Livre proposé non trouvé");
         if (!targetBook) throw new ResourceNotFoundError("Le livre demandé n'existe pas");
