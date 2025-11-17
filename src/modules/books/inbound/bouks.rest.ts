@@ -1,6 +1,8 @@
 import {Router, type Request, type Response } from "express";
 import type { BookService } from "../core/books.service";
+import type { AuthService } from "@/modules/auth/core/auth.service";
 import { z } from "zod";
+import { requireAuth } from "@/modules/auth/inbound/auth.middleware";
 
 const createBookSchema = z.object({
     title: z.string().min(1, "Le titre est obligatoire"),
@@ -14,10 +16,10 @@ const createBookSchema = z.object({
 
 
 
-export function BookController(service: BookService):Router{
+export function BookController(service: BookService, authService: AuthService):Router{
          const router = Router();
          
-         router.post("/", async(req:Request, res:Response, next)=>{
+         router.post("/", requireAuth(authService), async(req:Request, res:Response, next)=>{
             try {
                 const parsed = createBookSchema.parse(req.body);
                 const ownerId = res.locals.user.id;
@@ -36,13 +38,9 @@ export function BookController(service: BookService):Router{
                 res.status(200).json({ books });
               } catch(error) {
                 next(error)
-              }
-         })
-
-
-      
-
-
-
-         return router;
+            }
+          } )
+    
+           
+        return router;
 }
