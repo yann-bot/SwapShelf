@@ -13,7 +13,7 @@ export type Exchange = {
     created_at: Date;
 };
 
-export type CreateExchangeInput = Omit<Exchange, 'id' | 'created_at'>;
+export type CreateExchangeInput = Omit<Exchange, 'id' | 'created_at' | 'status'>;
 
 export class ExchangeEntity {
     private status: ExchangeStatus = 'pending'
@@ -43,7 +43,7 @@ export class ExchangeEntity {
         const existing = await exchangeDb.readOne(this.myBookId, this.targetBookId, this.requesterId);
         if (existing) throw new InvalidExchangeError("Une demande similaire est déjà en attente");
 
-        return await exchangeDb.create({
+        const result=  await exchangeDb.create({
             id: randomUUID(),
             requester_id: this.requesterId,
             my_book_id: this.myBookId,
@@ -51,6 +51,8 @@ export class ExchangeEntity {
             status: this.status,
             created_at: new Date(),
           });
+
+        return result;
 
     }
 }
