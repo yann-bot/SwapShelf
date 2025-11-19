@@ -1,18 +1,21 @@
 import type { Exchange, ExchangeRepo } from "../core/exhanges.models";
-import {db}  from '@/db/db';
+import { db }  from '@/db/db';
 import { exchanges } from "@/db/schemas";
-import { eq, and} from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 
 
 export  class ExchangeDrizzleRepo implements ExchangeRepo {
-    
+    /**
+     * Inserts a new exchange row and returns the persisted record.
+     */
     async create(input: Exchange): Promise<Exchange> {
         const [result] =  await db.insert(exchanges).values(input).returning();
         return result!
     }
 
     async readAll():Promise<Exchange[]>{
+        // NOTE: currently returns every row; add pagination when data grows.
         const result = await db.select().from(exchanges);
         return result;
 

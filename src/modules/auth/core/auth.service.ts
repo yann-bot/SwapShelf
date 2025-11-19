@@ -24,10 +24,10 @@ export class AuthService {
             throw new InvalidCredentialsError("Invalid email or password");
         }
         
-        const playLoad =  {id: user.id, email: user.email, role: user.role };
+        const payLoad =  {id: user.id, email: user.email, role: user.role };
 
         const token = jwt.sign(
-            playLoad,
+            payLoad,
             this.deps.jwtSecret,
             {expiresIn: this.deps.jwtExpiresIn ?? "1h"}
         )
