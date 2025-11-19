@@ -53,7 +53,7 @@ src/modules/
 
 1. **Cloner le dépôt**
    ```bash
-   git clone https://github.com/votre-username/swapshelf.git
+   git clone https://github.com/yann-bot/swapshelf.git
    cd swapshelf
    ```
 
@@ -95,6 +95,7 @@ Tester un module spécifique :
 bun test ./src/modules/users/users.test.ts
 bun test ./src/modules/books/books.test.ts
 bun test ./src/modules/auth/auth.test.ts
+bun test ./src/modules/exchanges/exchange.test.ts
 ```
 
 ## 📖 Documentation API
@@ -252,6 +253,7 @@ Format des erreurs :
 ```bash
 bun run dev          # Lance le serveur en mode développement
 bun test             # Exécute tous les tests
+bun test:coverage    # Execute tous les tests et affiche le graphique  de couverture
 bunx drizzle-kit push    # Applique les migrations DB
 bunx drizzle-kit studio  # Interface graphique pour la DB
 ```
